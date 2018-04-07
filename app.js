@@ -1,3 +1,6 @@
+// Lib
+const Mathabs = Math.abs;
+
 // configSize
 const cS = {
   w: 10000,
@@ -25,16 +28,13 @@ const config = {
     update: update
   }
 };
+const game = new Phaser.Game(config);
 
 let player;
 let platforms;
 let input;
 let cursors;
-let gameOver = false;
 let tests;
-
-const game = new Phaser.Game(config);
-
 function preload() {
   this.load.image('sky', './assets/sky.png');
   this.load.image('ground', './assets/ground.png');
@@ -43,7 +43,6 @@ function preload() {
   this.load.image('test', './assets/test.png');
   this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
 }
-
 function create() {
   // Camera
   this.cameras.main.setBounds(0, 0, cS.w, cS.h);
@@ -103,6 +102,7 @@ function create() {
     frameRate: 10,
     repeat: -1
   });
+  player.anims.play('turn');
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -114,12 +114,7 @@ function create() {
   // Overlaps
   this.physics.add.overlap(player, tests, interactTest, null, this);
 }
-
 function update() {
-  if (gameOver) {
-    return;
-  }
-
   // Movements
   if (cursors.left.isDown) {
     // Left Move
@@ -129,7 +124,7 @@ function update() {
     // Right Move
     player.setVelocityX(160);
     player.anims.play('right', true);
-  } else {
+  } else if (Mathabs(player.body.velocity.x) > 0) {
     // Standing
     player.setVelocityX(0);
     player.anims.play('turn');
@@ -141,7 +136,7 @@ function update() {
   }
 
   // Camera follow
-  if (Math.abs(player.body.velocity.x) > 5 || Math.abs(player.body.velocity.y) > 5) {
+  if (Mathabs(player.body.velocity.x) > 5 || Mathabs(player.body.velocity.y) > 5) {
     this.cameras.main.scrollX = player.x - cS.vwo;
     this.cameras.main.scrollY = player.y - cS.vho;
   }
@@ -154,6 +149,7 @@ let testObject;
 testModal.on('hidden.bs.modal', function (e) {
   input.enabled = true;
   testObject.disableBody(true, true);
+  testObject = null;
   testModalIsVisible = false;
 });
 function interactTest(player, test) {
@@ -162,9 +158,12 @@ function interactTest(player, test) {
     testObject = test;
     // Disable inputs
     input.enabled = false;
-    input.keys.forEach(function(k){
-      k.isDown = false;
-    });
+    for (let i = 0; i < input.keys.length; i++) {
+      let key = input.keys[i];
+      if (key) {
+        key.isDown = false;
+      }
+    }
     // Trigger the modal
     testModalIsVisible = true;
     testModal.modal();
