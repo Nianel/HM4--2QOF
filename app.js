@@ -52,8 +52,8 @@ function create() {
 
   // Background
   const bg = this.add.image(400, 300, 'sky');
-  bg.scaleX = 25;
-  bg.scaleY = 20;
+  bg.scaleX = Math.floor(cS.w / bg.width) + 1;
+  bg.scaleY = Math.floor(cS.h / bg.height) + 1;
 
   // First scene
   const bg1 = this.add.image(0, cS.h + 40, 'bg1');
