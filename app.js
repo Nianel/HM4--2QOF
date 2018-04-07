@@ -76,9 +76,9 @@ function create() {
   // Tests objects
   tests = this.physics.add.staticGroup();
   const test1 = tests.create(1150, cS.h-350, 'test');
-  const test2 = tests.create(1500, cS.h-350, 'test');
-  const test3 = tests.create(1800, cS.h-350, 'test');
-  const test4 = tests.create(2100, cS.h-350, 'test');
+  // const test2 = tests.create(1500, cS.h-350, 'test');
+  // const test3 = tests.create(1800, cS.h-350, 'test');
+  // const test4 = tests.create(2100, cS.h-350, 'test');
 
 
   // The layer and its settings
@@ -117,12 +117,12 @@ function create() {
   this.physics.add.overlap(player, tests, interactTest, null, this);
 }
 function update() {
-  if (player.x > 1000 && pVelocityCount === 0 ) {
-    pVelocity -= 50;
+  if (player.x < 2000 && pVelocityCount === 0 ) {
+    pVelocity += 20;
     pVelocityCount++;
   }
   if (player.x > 2000 && pVelocityCount === 1) {
-    pVelocity += 300;
+    pVelocity -= 70;
     pVelocityCount++;
   }
   // Movements
@@ -139,6 +139,8 @@ function update() {
     player.setVelocityX(0);
     player.anims.play('turn');
   }
+
+  console.log(pVelocity);
 
   // Jump
   if ((cursors.space.isDown || cursors.up.isDown) && player.body.touching.down) {
