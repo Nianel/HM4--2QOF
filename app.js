@@ -37,6 +37,7 @@ let platforms;
 let input;
 let cursors;
 let tests;
+
 function preload() {
   this.load.image('sky', './assets/sky.png');
   this.load.image('ground', './assets/ground.png');
@@ -45,27 +46,25 @@ function preload() {
   this.load.image('test', './assets/test.png');
   this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
 }
+
 function create() {
   // Camera
   this.cameras.main.setBounds(0, 0, cS.w, cS.h);
   this.cameras.main.setSize(cS.vw, cS.vh);
 
   // Background
-  const bg = this.add.image(400, 300, 'sky');
-  bg.scaleX = Math.floor(cS.w / bg.width) + 1;
-  bg.scaleY = Math.floor(cS.h / bg.height) + 1;
+  const bg = this.add.image(0, 0, 'sky').setOrigin(0, 0);
+  spriteAutoScale(bg, 'xy');
 
   // First scene
-  const bg1 = this.add.image(0, cS.h + 40, 'bg1');
-  bg1.setOrigin(0, 1);
+  this.add.image(0, cS.h + 40, 'bg1').setOrigin(0, 1);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
   // Ground
   const floor = platforms.create(0, cS.h, 'ground');
   floor.setOrigin(0, 1);
-  floor.scaleX = Math.floor(cS.w / floor.width) + 1;
-  floor.refreshBody();
+  spriteAutoScale(floor, 'xr');
   // Walls
   // platforms.create(600, cS.h - 350, 'wall').setOrigin(0, 1).setScale(1, 1.6).refreshBody();
   // platforms.create(600, cS.h - 550, 'ground').setOrigin(0, 1).setScale(9, 1).refreshBody();
@@ -75,14 +74,14 @@ function create() {
 
   // Tests objects
   tests = this.physics.add.staticGroup();
-  const test1 = tests.create(1150, cS.h-350, 'test');
-  // const test2 = tests.create(1500, cS.h-350, 'test');
-  // const test3 = tests.create(1800, cS.h-350, 'test');
-  // const test4 = tests.create(2100, cS.h-350, 'test');
+  const test1 = tests.create(1150, cS.h - 350, 'test');
+  const test2 = tests.create(1500, cS.h-350, 'test');
+  const test3 = tests.create(1800, cS.h-350, 'test');
+  const test4 = tests.create(2100, cS.h-350, 'test');
 
 
   // The layer and its settings
-  player = this.physics.add.sprite(10, cS.h-200, 'dude');
+  player = this.physics.add.sprite(10, cS.h - 200, 'dude');
   // Physics properties
   player.setBounce(0.1);
   player.setCollideWorldBounds(true);
@@ -116,15 +115,14 @@ function create() {
   // Overlaps
   this.physics.add.overlap(player, tests, interactTest, null, this);
 }
+
 function update() {
-  if (player.x < 2000 && pVelocityCount === 0 ) {
-    pVelocity += 20;
-    pVelocityCount++;
-  }
-  if (player.x > 2000 && pVelocityCount === 1) {
+  // Modify the velocity
+  if (player.x > 2000 && pVelocityCount === 0) {
     pVelocity -= 70;
     pVelocityCount++;
   }
+
   // Movements
   if (cursors.left.isDown) {
     // Left Move
@@ -139,8 +137,6 @@ function update() {
     player.setVelocityX(0);
     player.anims.play('turn');
   }
-
-  console.log(pVelocity);
 
   // Jump
   if ((cursors.space.isDown || cursors.up.isDown) && player.body.touching.down) {
@@ -164,6 +160,7 @@ testModal.on('hidden.bs.modal', function (e) {
   testObject = null;
   testModalIsVisible = false;
 });
+
 function interactTest(player, test) {
   if (!testModalIsVisible) {
     // Save the test
@@ -179,5 +176,18 @@ function interactTest(player, test) {
     // Trigger the modal
     testModalIsVisible = true;
     testModal.modal();
+  }
+}
+
+// Helpers
+function spriteAutoScale(e, mode = 'xyr') {
+  if (mode.includes('x')) {
+    e.scaleX = Math.floor(cS.w / e.width) + 1;
+  }
+  if (mode.includes('y')) {
+    e.scaleY = Math.floor(cS.h / e.height) + 1;
+  }
+  if (mode.includes('r')) {
+    e.refreshBody();
   }
 }
