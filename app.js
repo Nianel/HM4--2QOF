@@ -31,6 +31,8 @@ const config = {
 const game = new Phaser.Game(config);
 
 let player;
+let pVelocity = 160;
+let pVelocityCount = 0;
 let platforms;
 let input;
 let cursors;
@@ -115,14 +117,22 @@ function create() {
   this.physics.add.overlap(player, tests, interactTest, null, this);
 }
 function update() {
+  if (player.x > 1000 && pVelocityCount === 0 ) {
+    pVelocity -= 50;
+    pVelocityCount++;
+  }
+  if (player.x > 2000 && pVelocityCount === 1) {
+    pVelocity += 300;
+    pVelocityCount++;
+  }
   // Movements
   if (cursors.left.isDown) {
     // Left Move
-    player.setVelocityX(-160);
+    player.setVelocityX(-pVelocity);
     player.anims.play('left', true);
   } else if (cursors.right.isDown) {
     // Right Move
-    player.setVelocityX(160);
+    player.setVelocityX(pVelocity);
     player.anims.play('right', true);
   } else if (Mathabs(player.body.velocity.x) > 0) {
     // Standing
@@ -132,7 +142,7 @@ function update() {
 
   // Jump
   if ((cursors.space.isDown || cursors.up.isDown) && player.body.touching.down) {
-    player.setVelocityY(-330);
+    player.setVelocityY(-(pVelocity + 200));
   }
 
   // Camera follow
