@@ -5,10 +5,30 @@
   <title>HM4-2QOF</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.3.0/dist/phaser.min.js"></script>
-  <script src="./app.js"></script>
 </head>
 <body style="margin: 0;">
-
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Test n°1</h4>
+        </div>
+        <div class="modal-body">
+          <p id="question">What does HTML stand for?</p>
+          <ul id="answers">
+            <li>Hyper Text Markup Language</li>
+            <li>HyperLinks and Text Markup Language</li>
+            <li>Home Tool Markup Language</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./app.js"></script>
 </body>
 </html>

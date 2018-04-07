@@ -1,0 +1,66 @@
+[
+  {
+    "question": "What does HTML stand for?",
+    "answers": [
+      "Hyper Text Markup Language",
+      "HyperLinks and Text Markup Language",
+      "Home Tool Markup Language"
+    ],
+    "correct": 0
+  },
+  {
+    "question": "The Bootstrap grid system is based on how many columns?",
+    "answers": [
+      "6",
+      "9",
+      "12",
+      "3"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "What does CSS stand for?",
+    "answers": [
+      "Colorful Style Sheets",
+      "Cascading Style Sheets",
+      "Creative Style Sheets",
+      "Computer Style Sheets"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which property is used to change the background color?",
+    "answers": [
+      "bgcolor",
+      "color",
+      "background-color"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Javascript is the same as Java?",
+    "answers": [
+      "True",
+      "False"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Which event occurs when the user clicks on an HTML element?",
+    "answers": [
+      "onchange",
+      "onmouseclick",
+      "onmouseover",
+      "onclick"
+    ],
+    "correct": 3
+  },
+  {
+    "question": "Is JavaScript case-sensitive?",
+    "answers": [
+      "True",
+      "False"
+    ],
+    "correct": 0
+  }
+]
