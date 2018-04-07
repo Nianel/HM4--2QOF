@@ -74,9 +74,9 @@ function create() {
   // Tests objects
   tests = this.physics.add.staticGroup();
   const test1 = tests.create(1150, cS.h-350, 'test');
-  const test2 = tests.create(1500, cS.h-90, 'test');
-  const test3 = tests.create(1800, cS.h-90, 'test');
-  const test4 = tests.create(2100, cS.h-90, 'test');
+  const test2 = tests.create(1500, cS.h-350, 'test');
+  const test3 = tests.create(1800, cS.h-350, 'test');
+  const test4 = tests.create(2100, cS.h-350, 'test');
 
 
   // The layer and its settings
