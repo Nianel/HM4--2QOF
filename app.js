@@ -1,6 +1,7 @@
-const configSize = {
-  w: 3200,
-  h: 1500,
+// cS
+const cS = {
+  w: 3000,
+  h: 2200,
   vw: window.innerWidth,
   vh: window.innerHeight,
   vwo: window.innerWidth / 2,
@@ -9,8 +10,8 @@ const configSize = {
 
 const config = {
   type: Phaser.AUTO,
-  width: configSize.w,
-  height: configSize.h,
+  width: cS.w,
+  height: cS.h,
   physics: {
     default: 'arcade',
     arcade: {
@@ -38,16 +39,17 @@ const game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('sky', './assets/sky.png');
-  this.load.image('ground', './assets/platform.png');
+  this.load.image('ground', './assets/ground.png');
+  this.load.image('wall', './assets/wall.png');
   this.load.image('star', './assets/star.png');
   this.load.image('bomb', './assets/bomb.png');
-  this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 32, frameHeight: 98});
+  this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
 }
 
 function create() {
   //  The world is 3200 x 600 in size
-  this.cameras.main.setBounds(0, 0, configSize.w, configSize.h);
-  this.cameras.main.setSize(configSize.vw, configSize.vh);
+  this.cameras.main.setBounds(0, 0, cS.w, cS.h);
+  this.cameras.main.setSize(cS.vw, cS.vh);
 
   //  A simple background for our game
   let bg = this.add.image(400, 300, 'sky');
@@ -59,18 +61,19 @@ function create() {
 
   //  Here we create the ground.
   //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-  let floor = platforms.create(400, 692, 'ground').setScale(2).refreshBody();
-  floor.scaleX = 10;
+  let floor = platforms.create(0, cS.h, 'ground');
+  floor.setOrigin(0, 1);
+  floor.scaleX = Math.floor(cS.w / floor.width) + 1;
   floor.refreshBody();
 
   //  Now let's create some ledges
-  platforms.create(600, 500, 'ground');
-  platforms.create(50, 350, 'ground');
-  platforms.create(1000, 150, 'ground');
-  platforms.create(750, 270, 'ground');
+  platforms.create(200, cS.h - 400, 'wall').setScale(1, 1).refreshBody();
+  // platforms.create(1000, 740, 'wall');
+  // platforms.create(750, 570, 'wall');
+  // platforms.create(1200, 670, 'wall');
 
   // The player and its settings
-  player = this.physics.add.sprite(100, 250, 'dude');
+  player = this.physics.add.sprite(100, cS.h-200, 'dude');
 
   //  Player physics properties. Give the little guy a slight bounce.
   player.setBounce(0.1);
@@ -79,20 +82,20 @@ function create() {
   //  Our player animations, turning, walking left and walking right.
   this.anims.create({
     key: 'left',
-    frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 1}),
+    frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
     frameRate: 10,
     repeat: -1
   });
 
   this.anims.create({
     key: 'turn',
-    frames: [{key: 'dude', frame: 1}],
+    frames: [{key: 'dude', frame: 4}],
     frameRate: 20
   });
 
   this.anims.create({
     key: 'right',
-    frames: this.anims.generateFrameNumbers('dude', {start: 1, end: 2}),
+    frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 7}),
     frameRate: 10,
     repeat: -1
   });
@@ -156,8 +159,8 @@ function update() {
   }
 
   if (Math.abs(player.body.velocity.x) > 5 || Math.abs(player.body.velocity.y) > 5) {
-    this.cameras.main.scrollX = player.x - configSize.vwo;
-    this.cameras.main.scrollY = player.y - configSize.vho;
+    this.cameras.main.scrollX = player.x - cS.vwo;
+    this.cameras.main.scrollY = player.y - cS.vho;
   }
 }
 
