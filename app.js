@@ -1,5 +1,7 @@
 // Lib
 const Mathabs = Math.abs;
+const Mathmin = Math.min;
+const Mathmax = Math.max;
 
 // configSize
 const cS = {
@@ -158,7 +160,7 @@ function update() {
     mCamera.scrollX = player.x - cS.vwo;
     mCamera.scrollY = player.y - cS.vho;
     // Score
-    pScoreText.x = Math.max(0, player.x - cS.vwo);
+    pScoreText.x = Mathmin(Mathmax(0, player.x - cS.vwo), cS.w - cS.vw);
   }
 }
 
