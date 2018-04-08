@@ -241,7 +241,7 @@ function interactTest(player, test) {
     // Select a test
     const testIndex = Math.floor(Math.random() * Math.floor(testsAvailable.length));
     const selectedTest = testsPool[testsAvailable[testIndex]];
-    testsPool.splice(testIndex, 1);
+    testsAvailable.splice(testIndex, 1);
 
     // Display the question
     const questionNode = document.querySelector('#question');
