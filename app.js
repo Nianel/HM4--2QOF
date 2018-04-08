@@ -50,7 +50,6 @@ const pAgeIncreasePerQuestion = 10;
 const pLifespanDecreasePerWrongAnswer = 10;
 
 function preload() {
-  this.load.image('sky', './assets/sky.png');
   this.load.image('ground', './assets/ground.png');
   this.load.image('wall', './assets/wall.png');
   this.load.image('bg1', './assets/bg1.png');
@@ -69,9 +68,8 @@ function create() {
   // Platforms
   platforms = this.physics.add.staticGroup();
   // Ground
-  const floor = platforms.create(0, cS.h, 'ground');
-  floor.setOrigin(0, 1);
-  spriteAutoScale(floor, 'xr');
+  const floor = platforms.create(0, cS.h, 'ground').setOrigin(0, 1);
+  spriteBundledTransformations(floor, 'axr');
   // Walls
   // platforms.create(600, cS.h - 350, 'wall').setOrigin(0, 1).setScale(1, 1.6).refreshBody();
   // platforms.create(600, cS.h - 550, 'ground').setOrigin(0, 1).setScale(9, 1).refreshBody();
@@ -301,7 +299,10 @@ function displayCorrectAnswer () {
 }
 
 // Helpers
-function spriteAutoScale(e, mode = 'xyr') {
+function spriteBundledTransformations(e, mode) {
+  if (mode.includes('a')) {
+    e.alpha = 0;
+  }
   if (mode.includes('x')) {
     e.scaleX = Math.floor(cS.w / e.width) + 1;
   }
