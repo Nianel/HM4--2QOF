@@ -43,7 +43,9 @@ let kInput;
 let cursors;
 // Score
 let pLifespan = 100;
+let pLifespanText;
 let pAge = 20;
+let pAgeText;
 const pAgeIncreasePerQuestion = 10;
 const pLifespanDecreasePerWrongAnswer = 10;
 
@@ -88,6 +90,11 @@ function create() {
   const test3 = tests.create(1800, cS.h - 350, 'test');
   const test4 = tests.create(2100, cS.h - 350, 'test');
 
+  //Player life
+  pLifespanText = this.add.text(40, cS.h - 750, 'Life : 100', { fontSize: '32px', fill: '#000' });
+
+  //Player age
+  pAgeText = this.add.text(2000, cS.h - 780, 'Age : 20', { fontSize: '32px', fill: '#000' });
 
   // The layer and its settings
   player = this.physics.add.sprite(10, cS.h - 200, 'dude');
@@ -129,6 +136,9 @@ function update() {
   // Modify the velocity
   if (player.x > 2000 && pVelocityCount === 0) {
     pVelocity -= 70;
+    pVelocityCount++;
+  } else if (player.x > 2500 && pVelocityCount === 1) {
+    pVelocity -= 30;
     pVelocityCount++;
   }
 
