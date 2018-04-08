@@ -5,8 +5,8 @@ const Mathmax = Math.max;
 
 // configSize
 const cS = {
-  w: 10000,
-  h: 1000,
+  w: 11195,
+  h: 1654,
   vw: window.innerWidth,
   vh: window.innerHeight,
   vwo: window.innerWidth / 2,
@@ -36,13 +36,13 @@ const game = new Phaser.Game(config);
 // Sprites
 let bg1, bg2, bg3;
 let platforms, player, tests;
+const bgXOffsets = [];
 // Controllers
 let right, left, turn;
 let mCamera;
 let kInput;
 let cursors;
 // Player properties
-let animations;
 let pVelocity = 1800;
 let pVelocityCount = 0;
 let pLifespan = 100;
@@ -69,10 +69,21 @@ function create() {
   mCamera = this.cameras.main;
   mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh).setBackgroundColor('#000000');
 
-  // First scene
-  bg1 = this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
-  bg2 = this.add.image(bg1.width, cS.h, 'bg2').setOrigin(0, 1);
-  bg3 = this.add.image(bg2.width, cS.h, 'bg3').setOrigin(0, 1);
+  // Scenes
+  let bgXOffset = 0;
+  bgXOffsets.push(bgXOffset);
+  // First
+  bg1 = this.add.image(bgXOffset, cS.h, 'bg1').setOrigin(0, 1);
+  bgXOffset += bg1.width;
+  bgXOffsets.push(bgXOffset);
+  // Second
+  bg2 = this.add.image(bgXOffset, cS.h, 'bg2').setOrigin(0, 1);
+  bgXOffset += bg2.width;
+  bgXOffsets.push(bgXOffset);
+  // Third
+  bg3 = this.add.image(bgXOffset, cS.h, 'bg3').setOrigin(0, 1);
+  bgXOffset += bg3.width;
+  bgXOffsets.push(bgXOffset);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
@@ -106,11 +117,11 @@ function create() {
 
 function update() {
   // Modify the velocity
-  if (player.x > bg1.width && pVelocityCount === 0) {
+  if (player.x > bgXOffsets[1] && pVelocityCount === 0) {
     spriteSwapChar(this, 'char3');
     pVelocity -= 30;
     pVelocityCount++;
-  } else if (player.x > bg2.width && pVelocityCount === 1) {
+  } else if (player.x > bgXOffsets[2] && pVelocityCount === 1) {
     spriteSwapChar(this, 'char4');
     pVelocity -= 70;
     pVelocityCount++;
