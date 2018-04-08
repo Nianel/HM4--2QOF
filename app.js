@@ -168,8 +168,30 @@ testModal.on('hidden.bs.modal', function (e) {
   if (pAge >= pLifespan) {
     // Schedule the end of the game
     setTimeout(function () {
-      game.destroy();
-    }, 2000);
+      // End the game
+      game.destroy(true);
+      // Clear the DOM
+      const body = document.body;
+      while (body.firstChild) {
+        body.removeChild(body.firstChild);
+      }
+      // Insert the end image
+      const img = new Image();
+      img.src = 'https://www.fuzz-bayonne.com/wp-content/uploads/2017/02/JUSTICE-Cross.jpg';
+      img.style.display = 'block';
+      img.style.margin = 'auto';
+      img.style.opacity = '0';
+      body.appendChild(img);
+      let steps = 0;
+      let timer = setInterval(function() {
+        steps++;
+        img.style.opacity = (0.05 * steps).toString();
+        if(steps >= 20) {
+          clearInterval(timer);
+          timer = undefined;
+        }
+      }, 50);
+    }, 1500);
     // Fade the camera
     mCamera.fade(1500);
   }
@@ -177,7 +199,7 @@ testModal.on('hidden.bs.modal', function (e) {
   kInput.enabled = true;
   // Destroy the test
   testObject.disableBody(true, true);
-  testObject = null;
+  testObject = undefined;
   // Allow the trigger of another modal
   testModalIsVisible = false;
 });
