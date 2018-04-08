@@ -26,17 +26,24 @@ const config = {
     preload: preload,
     create: create,
     update: update
-  }
+  },
+  banner: false
 };
 const game = new Phaser.Game(config);
 
+// Sprites
 let player;
 let pVelocity = 160;
 let pVelocityCount = 0;
 let platforms;
-let input;
-let cursors;
 let tests;
+// Controllers
+let mCamera;
+let kInput;
+let cursors;
+// Score
+let pLifespan = 100;
+let pAge = 20;
 
 function preload() {
   this.load.image('sky', './assets/sky.png');
@@ -49,8 +56,8 @@ function preload() {
 
 function create() {
   // Camera
-  this.cameras.main.setBounds(0, 0, cS.w, cS.h);
-  this.cameras.main.setSize(cS.vw, cS.vh);
+  mCamera = this.cameras.main;
+  mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh);
 
   // Background
   const bg = this.add.image(0, 0, 'sky').setOrigin(0, 0);
@@ -107,7 +114,7 @@ function create() {
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
-  input = this.input.keyboard;
+  kInput = this.input.keyboard;
 
   // Colliders
   this.physics.add.collider(player, platforms);
@@ -145,8 +152,8 @@ function update() {
 
   // Camera follow
   if (Mathabs(player.body.velocity.x) > 5 || Mathabs(player.body.velocity.y) > 5) {
-    this.cameras.main.scrollX = player.x - cS.vwo;
-    this.cameras.main.scrollY = player.y - cS.vho;
+    mCamera.scrollX = player.x - cS.vwo;
+    mCamera.scrollY = player.y - cS.vho;
   }
 }
 
@@ -155,9 +162,23 @@ const testModal = $('#myModal');
 let testModalIsVisible = false;
 let testObject;
 testModal.on('hidden.bs.modal', function (e) {
-  input.enabled = true;
+  // Increase the poor dude age
+  pAge += 30;
+  // Is it game over ?
+  if (pAge >= pLifespan) {
+    // Schedule the end of the game
+    setTimeout(function () {
+      game.destroy();
+    }, 2000);
+    // Fade the camera
+    mCamera.fade(1500);
+  }
+  // Enable back keyboard kInput
+  kInput.enabled = true;
+  // Destroy the test
   testObject.disableBody(true, true);
   testObject = null;
+  // Allow the trigger of another modal
   testModalIsVisible = false;
 });
 
@@ -165,14 +186,16 @@ function interactTest(player, test) {
   if (!testModalIsVisible) {
     // Save the test
     testObject = test;
-    // Disable inputs
-    input.enabled = false;
-    for (let i = 0; i < input.keys.length; i++) {
-      let key = input.keys[i];
+    // Disable keyboard kInput
+    kInput.enabled = false;
+    for (let i = 0; i < kInput.keys.length; i++) {
+      let key = kInput.keys[i];
       if (key) {
         key.isDown = false;
       }
     }
+    // Put the question
+    // TODO
     // Trigger the modal
     testModalIsVisible = true;
     testModal.modal({
