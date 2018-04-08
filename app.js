@@ -56,6 +56,8 @@ function preload() {
   this.load.image('bg2', './assets/bg2.png');
   this.load.image('test', './assets/test.png');
   this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
+  this.load.spritesheet('dude2', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
+  this.load.spritesheet('dude3', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
 }
 
 function create() {
@@ -89,48 +91,22 @@ function create() {
   //Player life
   pScoreText = this.add.text(0, cS.h - cS.vh, 'Age: 20 | Lifespan: 100', { fontSize: '24px', color: '#FFFFFF', backgroundColor: '#000000' }).setOrigin(0, 0);
 
-  // The layer and its settings
-  player = this.physics.add.sprite(10, cS.h - 200, 'dude');
-  // Physics properties
-  player.setBounce(0.1);
-  player.setCollideWorldBounds(true);
-  // Animations
-  this.anims.create({
-    key: 'left',
-    frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
-    frameRate: 10,
-    repeat: -1
-  });
-  this.anims.create({
-    key: 'turn',
-    frames: [{key: 'dude', frame: 4}],
-    frameRate: 20
-  });
-  this.anims.create({
-    key: 'right',
-    frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 7}),
-    frameRate: 10,
-    repeat: -1
-  });
-  player.anims.play('turn');
+  // The player and its settings
+  player = spriteLoadChar(this, 10, cS.h - 200, 'dude');
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
   kInput = this.input.keyboard;
-
-  // Colliders
-  this.physics.add.collider(player, platforms);
-
-  // Overlaps
-  this.physics.add.overlap(player, tests, interactTest, null, this);
 }
 
 function update() {
   // Modify the velocity
   if (player.x > bg1.width && pVelocityCount === 0) {
+    spriteSwapChar(this, 'dude2');
     pVelocity -= 30;
     pVelocityCount++;
   } else if (player.x > bg2.width && pVelocityCount === 1) {
+    spriteSwapChar(this, 'dude3');
     pVelocity -= 70;
     pVelocityCount++;
   }
@@ -312,4 +288,40 @@ function spriteBundledTransformations(e, mode) {
   if (mode.includes('r')) {
     e.refreshBody();
   }
+}
+function spriteLoadChar(scene, x, y, key) {
+  const char = scene.physics.add.sprite(x, y, key);
+  // Physics properties
+  char.setBounce(0.1);
+  char.setCollideWorldBounds(true);
+  // Animations
+  scene.anims.create({
+    key: 'left',
+    frames: scene.anims.generateFrameNumbers(key, {start: 0, end: 3}),
+    frameRate: 10,
+    repeat: -1
+  });
+  scene.anims.create({
+    key: 'turn',
+    frames: [{key: key, frame: 4}],
+    frameRate: 20
+  });
+  scene.anims.create({
+    key: 'right',
+    frames: scene.anims.generateFrameNumbers(key, {start: 5, end: 7}),
+    frameRate: 10,
+    repeat: -1
+  });
+  char.anims.play('turn');
+  // Colliders
+  scene.physics.add.collider(char, platforms);
+  // Overlaps
+  scene.physics.add.overlap(char, tests, interactTest, null, this);
+
+  return char;
+}
+function spriteSwapChar(scene, key) {
+  const x = player.x, y = player.y;
+  player.destroy();
+  player = spriteLoadChar(scene, x, y, key);
 }
