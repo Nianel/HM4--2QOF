@@ -156,12 +156,16 @@ function update() {
 
 // Fetch the tests json
 let testsPool;
+const testsAvailable = [];
 fetch('./assets/tests.json')
   .then(function (response) {
     return response.json();
   })
   .then(function (jsonResponse) {
     testsPool = jsonResponse;
+    for (let i = 0; i < testsPool.length; i++) {
+      testsAvailable.push(i);
+    }
   });
 // Tests handler
 const testModal = $('#myModal');
@@ -231,7 +235,9 @@ function interactTest(player, test) {
     }
 
     // Select a test
-    const selectedTest = testsPool[Math.floor(Math.random() * Math.floor(testsPool.length))];
+    const testIndex = Math.floor(Math.random() * Math.floor(testsAvailable.length));
+    const selectedTest = testsPool[testsAvailable[testIndex]];
+    testsPool.splice(testIndex, 1);
 
     // Display the question
     const questionNode = document.querySelector('#question');
