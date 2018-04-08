@@ -43,9 +43,8 @@ let kInput;
 let cursors;
 // Score
 let pLifespan = 100;
-let pLifespanText;
 let pAge = 20;
-let pAgeText;
+let pScoreText;
 const pAgeIncreasePerQuestion = 10;
 const pLifespanDecreasePerWrongAnswer = 10;
 
@@ -85,10 +84,7 @@ function create() {
   const test4 = tests.create(2100, cS.h - 350, 'test');
 
   //Player life
-  pLifespanText = this.add.text(40, cS.h - cS.vh + 100, 'Life : 100', { fontSize: '32px', fill: '#000' });
-
-  //Player age
-  pAgeText = this.add.text(40, cS.h - cS.vh + 150, 'Age : 20', { fontSize: '32px', fill: '#000' });
+  pScoreText = this.add.text(0, cS.h - cS.vh, 'Age: 20 | Lifespan: 100', { fontSize: '24px', color: '#FFFFFF', backgroundColor: '#000000' }).setOrigin(0, 0);
 
   // The layer and its settings
   player = this.physics.add.sprite(10, cS.h - 200, 'dude');
@@ -156,14 +152,13 @@ function update() {
     player.setVelocityY(-(pVelocity + 200));
   }
 
-  // Camera follow
+  // Objects follow
   if (Mathabs(player.body.velocity.x) > 5 || Mathabs(player.body.velocity.y) > 5) {
-    // pLifespanText.x = player.x + 40 - cS.vwo;
-    // pLifespanText.y = player.y + 100 - cS.vho;
-    // pAgeText.x = player.x + 40 - cS.vwo;
-    // pAgeText.y = player.y + 150 - cS.vho;
+    // Camera
     mCamera.scrollX = player.x - cS.vwo;
     mCamera.scrollY = player.y - cS.vho;
+    // Score
+    pScoreText.x = Math.max(0, player.x - cS.vwo);
   }
 }
 
@@ -189,6 +184,7 @@ testModal.on('hidden.bs.modal', function (e) {
   if (testSelectedAnswerNode.dataset.qIndex !== testCorrectAnswerNode.dataset.qIndex) {
     pLifespan -= pLifespanDecreasePerWrongAnswer;
   }
+  pScoreText.setText(`Age: ${pAge} | Lifespan: ${pLifespan}`);
   // Is it game over ?
   if (pAge >= pLifespan) {
     // Schedule the end of the game
