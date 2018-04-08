@@ -61,11 +61,7 @@ function preload() {
 function create() {
   // Camera
   mCamera = this.cameras.main;
-  mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh);
-
-  // Background
-  const bg = this.add.image(0, 0, 'sky').setOrigin(0, 0);
-  spriteAutoScale(bg, 'xy');
+  mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh).setBackgroundColor('#000000');
 
   // First scene
   this.add.image(0, cS.h + 40, 'bg1').setOrigin(0, 1);
