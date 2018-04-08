@@ -41,6 +41,7 @@ let mCamera;
 let kInput;
 let cursors;
 // Player properties
+let animations;
 let pVelocity = 180;
 let pVelocityCount = 0;
 let pLifespan = 100;
@@ -55,9 +56,10 @@ function preload() {
   this.load.image('bg1', './assets/bg1.png');
   this.load.image('bg2', './assets/bg2.png');
   this.load.image('test', './assets/test.png');
-  this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
-  this.load.spritesheet('dude2', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
-  this.load.spritesheet('dude3', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
+  this.load.spritesheet('char1', './assets/char1.png', {frameWidth: 144, frameHeight: 256});
+  this.load.spritesheet('char2', './assets/char2.png', {frameWidth: 144, frameHeight: 256});
+  this.load.spritesheet('char3', './assets/char3.png', {frameWidth: 144, frameHeight: 256});
+  this.load.spritesheet('char4', './assets/char4.png', {frameWidth: 144, frameHeight: 256});
 }
 
 function create() {
@@ -92,7 +94,7 @@ function create() {
   pScoreText = this.add.text(0, cS.h - cS.vh, 'Age: 20 | Lifespan: 100', { fontSize: '24px', color: '#FFFFFF', backgroundColor: '#000000' }).setOrigin(0, 0);
 
   // The player and its settings
-  player = spriteLoadChar(this, 10, cS.h - 200, 'dude');
+  player = spriteLoadChar(this, 10, cS.h - 200, 'char1');
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
@@ -102,11 +104,11 @@ function create() {
 function update() {
   // Modify the velocity
   if (player.x > bg1.width && pVelocityCount === 0) {
-    spriteSwapChar(this, 'dude2');
+    spriteSwapChar(this, 'char3');
     pVelocity -= 30;
     pVelocityCount++;
   } else if (player.x > bg2.width && pVelocityCount === 1) {
-    spriteSwapChar(this, 'dude3');
+    spriteSwapChar(this, 'char4');
     pVelocity -= 70;
     pVelocityCount++;
   }
@@ -157,7 +159,7 @@ let testGameObject;
 let testCorrectAnswerNode;
 let testSelectedAnswerNode;
 testModal.on('hidden.bs.modal', function (e) {
-  // Increase the poor dude age
+  // Increase the player age
   pAge += pAgeIncreasePerQuestion;
   // Reduce the lifespan if the answer is wrong
   if (testSelectedAnswerNode.dataset.qIndex !== testCorrectAnswerNode.dataset.qIndex) {
@@ -295,23 +297,24 @@ function spriteLoadChar(scene, x, y, key) {
   char.setBounce(0.1);
   char.setCollideWorldBounds(true);
   // Animations
-  scene.anims.create({
+  animations = [];
+  animations.push(scene.anims.create({
     key: 'left',
     frames: scene.anims.generateFrameNumbers(key, {start: 0, end: 3}),
     frameRate: 10,
     repeat: -1
-  });
-  scene.anims.create({
+  }));
+  animations.push(scene.anims.create({
     key: 'turn',
     frames: [{key: key, frame: 4}],
     frameRate: 20
-  });
-  scene.anims.create({
+  }));
+  animations.push(scene.anims.create({
     key: 'right',
     frames: scene.anims.generateFrameNumbers(key, {start: 5, end: 7}),
     frameRate: 10,
     repeat: -1
-  });
+  }));
   char.anims.play('turn');
   // Colliders
   scene.physics.add.collider(char, platforms);
@@ -322,6 +325,9 @@ function spriteLoadChar(scene, x, y, key) {
 }
 function spriteSwapChar(scene, key) {
   const x = player.x, y = player.y;
+  for (let animation of animations) {
+    animation.destroy();
+  }
   player.destroy();
   player = spriteLoadChar(scene, x, y, key);
 }
