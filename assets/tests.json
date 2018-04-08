@@ -53,11 +53,49 @@
     "correct": 3
   },
   {
-    "question": "Is JavaScript case-sensitive?",
+    "question": "En quelle année l'homme a t'il marché sur la lune ?",
     "answers": [
-      "True",
-      "False"
+      "1963",
+      "1968",
+      "1969"
+    ],
+    "correct": 2
+  },
+  {
+    "question": "Qui est le père de Zeus ?",
+    "answers": [
+      "Cronos",
+      "Ouranos",
+      "Hadès"
     ],
     "correct": 0
+  },
+  {
+    "question": "En quelle année Marty Mcfly n'a t'il pas voyagé ?",
+    "answers": [
+      "1955",
+      "1885",
+      "2025"
+    ],
+    "correct": 2
+  },
+  {
+  "question": "Aux Etats-Unis, il manque un étage dans les gratte-ciel, lequel ?",
+  "answers": [
+    "Le 15ème",
+    "Le 13ème",
+    "Le dernier"
+  ],
+  "correct": 1
+  },
+  {
+    "question": "Comment s'appelait Mario à l'époque où on le voit dans le premier Donkey Kong ?",
+    "answers": [
+      "Mario",
+      "Jumpman",
+      "Luigi",
+      "Boing"
+    ],
+    "correct": 1
   }
 ]
