@@ -175,7 +175,10 @@ function interactTest(player, test) {
     }
     // Trigger the modal
     testModalIsVisible = true;
-    testModal.modal();
+    testModal.modal({
+      backdrop: 'static',
+      keyboard: false
+    });
   }
 }
 
