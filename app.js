@@ -82,9 +82,9 @@ function create() {
   // Tests objects
   tests = this.physics.add.staticGroup();
   const test1 = tests.create(1150, cS.h - 350, 'test');
-  const test2 = tests.create(1500, cS.h-350, 'test');
-  const test3 = tests.create(1800, cS.h-350, 'test');
-  const test4 = tests.create(2100, cS.h-350, 'test');
+  const test2 = tests.create(1500, cS.h - 350, 'test');
+  const test3 = tests.create(1800, cS.h - 350, 'test');
+  const test4 = tests.create(2100, cS.h - 350, 'test');
 
 
   // The layer and its settings
@@ -157,6 +157,15 @@ function update() {
   }
 }
 
+// Fetch the tests json
+let testsPool;
+fetch('./assets/tests.json')
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (jsonResponse) {
+    testsPool = jsonResponse;
+  });
 // Tests handler
 const testModal = $('#myModal');
 let testModalIsVisible = false;
@@ -217,7 +226,16 @@ function interactTest(player, test) {
       }
     }
     // Put the question
-    // TODO
+    const questionSelected = testsPool[0];
+    const questionNode = document.querySelector('#question');
+    questionNode.innerText = questionSelected.question;
+    const answersNode = document.querySelector('#answers');
+    const answers = questionSelected.answers;
+    let answersList = '';
+    for (let i in answers) {
+      answersList += `<li>${answers[i]}</li>`;
+    }
+    answersNode.innerHTML = answersList;
     // Trigger the modal
     testModalIsVisible = true;
     testModal.modal({
