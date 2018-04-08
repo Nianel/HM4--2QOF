@@ -5,8 +5,8 @@ const Mathmax = Math.max;
 
 // configSize
 const cS = {
-  w: 11195,
-  h: 1654,
+  w: 10455,
+  h: 1650,
   vw: window.innerWidth,
   vh: window.innerHeight,
   vwo: window.innerWidth / 2,
@@ -43,7 +43,7 @@ let mCamera;
 let kInput;
 let cursors;
 // Player properties
-let pVelocity = 1800;
+let pVelocity = 170;
 let pVelocityCount = 0;
 let pLifespan = 100;
 let pAge = 20;
@@ -314,18 +314,18 @@ function spriteLoadChar(scene, x, y, key) {
   scene.anims.create({
     key: left,
     frames: scene.anims.generateFrameNumbers(key, {start: 0, end: 3}),
-    frameRate: 10,
+    frameRate: 5,
     repeat: -1
   });
   scene.anims.create({
     key: turn,
     frames: [{key: key, frame: 4}],
-    frameRate: 20
+    frameRate: 1
   });
   scene.anims.create({
     key: right,
     frames: scene.anims.generateFrameNumbers(key, {start: 5, end: 7}),
-    frameRate: 10,
+    frameRate: 5,
     repeat: -1
   });
   char.anims.play(turn);
