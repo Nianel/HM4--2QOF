@@ -42,7 +42,7 @@ let kInput;
 let cursors;
 // Player properties
 let animations;
-let pVelocity = 180;
+let pVelocity = 1800;
 let pVelocityCount = 0;
 let pLifespan = 100;
 let pAge = 20;
@@ -55,6 +55,7 @@ function preload() {
   this.load.image('wall', './assets/wall.png');
   this.load.image('bg1', './assets/bg1.png');
   this.load.image('bg2', './assets/bg2.png');
+  this.load.image('bg3', './assets/bg3.png');
   this.load.image('test', './assets/test.png');
   this.load.spritesheet('char1', './assets/char1.png', {frameWidth: 144, frameHeight: 256});
   this.load.spritesheet('char2', './assets/char2.png', {frameWidth: 144, frameHeight: 256});
@@ -70,6 +71,7 @@ function create() {
   // First scene
   bg1 = this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
   bg2 = this.add.image(bg1.width, cS.h, 'bg2').setOrigin(0, 1);
+  bg3 = this.add.image(bg2.width, cS.h, 'bg3').setOrigin(0, 1);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
