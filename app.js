@@ -91,11 +91,8 @@ function create() {
   const floor = platforms.create(0, cS.h, 'ground').setOrigin(0, 1);
   spriteBundledTransformations(floor, 'axr');
   // Walls
-  // platforms.create(600, cS.h - 350, 'wall').setOrigin(0, 1).setScale(1, 1.6).refreshBody();
-  // platforms.create(600, cS.h - 550, 'ground').setOrigin(0, 1).setScale(9, 1).refreshBody();
-  // platforms.create(1736, cS.h - 350, 'wall').setOrigin(0, 1).setScale(1, 1.6).refreshBody();
-  // platforms.create(1737, cS.h - 350, 'ground').setOrigin(0, 1).setScale(10, 1).refreshBody();
-  // platforms.create(2520, cS.h - 350, 'wall').setOrigin(0, 1).setScale(1, 1.6).refreshBody();
+  const wall = platforms.create(11030, cS.h, 'wall').setOrigin(0, 1).setScale(1, 2).refreshBody();
+  spriteBundledTransformations(wall, 'axr');
 
   // Tests objects
   tests = this.physics.add.staticGroup();
@@ -193,7 +190,7 @@ testModal.on('hidden.bs.modal', function (e) {
       }
       // Insert the end image
       const img = new Image();
-      img.src = 'https://www.fuzz-bayonne.com/wp-content/uploads/2017/02/JUSTICE-Cross.jpg';
+      img.src = './assets/RIP.png';
       img.style.display = 'block';
       img.style.margin = 'auto';
       img.style.opacity = '0';
