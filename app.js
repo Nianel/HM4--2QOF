@@ -190,7 +190,7 @@ testModal.on('hidden.bs.modal', function (e) {
       }
       // Insert the end image
       const img = new Image();
-      img.src = './assets/RIP.png';
+      img.src = './assets/rip.png';
       img.style.display = 'block';
       img.style.margin = 'auto';
       img.style.opacity = '0';
