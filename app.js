@@ -63,7 +63,7 @@ function create() {
   mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh).setBackgroundColor('#000000');
 
   // First scene
-  this.add.image(0, cS.h + 40, 'bg1').setOrigin(0, 1);
+  this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
