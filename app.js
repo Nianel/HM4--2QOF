@@ -197,16 +197,26 @@ testModal.on('hidden.bs.modal', function (e) {
         body.removeChild(body.firstChild);
       }
       // Insert the end image
+      const div = document.createElement("div");
+      div.style.opacity = '0';
+      div.style.margin = 'auto';
       const img = new Image();
       img.src = './assets/rip.png';
       img.style.display = 'block';
       img.style.margin = 'auto';
-      img.style.opacity = '0';
-      body.appendChild(img);
+      div.appendChild(img);
+      const txt = document.createElement('p');
+      txt.innerText = `Vous êtes mort à ${pAge}ans.`;
+      txt.style.margin = 'auto';
+      txt.style.fontSize = '32px';
+      txt.style.color = 'white';
+      txt.style.textAlign = 'center';
+      div.appendChild(txt);
+      body.appendChild(div);
       let steps = 0;
       let timer = setInterval(function() {
         steps++;
-        img.style.opacity = (0.05 * steps).toString();
+        div.style.opacity = (0.05 * steps).toString();
         if(steps >= 20) {
           clearInterval(timer);
           timer = undefined;
