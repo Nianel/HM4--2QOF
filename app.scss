@@ -1,0 +1,15 @@
+body {
+  background: black;
+  margin: 0;
+
+  ul#answers {
+    list-style: none;
+
+    > li {
+      border: 2px solid transparent;
+      &:hover {
+        border: 2px solid orange;
+      }
+    }
+  }
+}

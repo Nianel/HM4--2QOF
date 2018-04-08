@@ -1,0 +1,11 @@
+body {
+  background: black;
+  margin: 0; }
+  body ul#answers {
+    list-style: none; }
+    body ul#answers > li {
+      border: 2px solid transparent; }
+      body ul#answers > li:hover {
+        border: 2px solid orange; }
+
+/*# sourceMappingURL=app.css.map */

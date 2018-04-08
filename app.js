@@ -262,6 +262,7 @@ function interactTest(player, test) {
       const child = document.createElement("li");
       child.innerText = answers[index];
       child.dataset.qIndex = index;
+      child.style.cursor = 'pointer';
       // Click callback
       child.addEventListener("click", function() {
         // Save the child reference of the selected answer
@@ -293,7 +294,7 @@ function closeTestModal () {
 function displayCorrectAnswer () {
   testSelectedAnswerNode.style.border = '2px solid orange';
   testCorrectAnswerNode.style.background = 'green';
-  setTimeout(closeTestModal, 3000);
+  setTimeout(closeTestModal, 2000);
 }
 
 // Helpers
