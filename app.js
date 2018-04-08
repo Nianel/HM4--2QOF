@@ -54,6 +54,7 @@ function preload() {
   this.load.image('ground', './assets/ground.png');
   this.load.image('wall', './assets/wall.png');
   this.load.image('bg1', './assets/bg1.png');
+  this.load.image('bg2', './assets/bg2.png');
   this.load.image('test', './assets/test.png');
   this.load.spritesheet('dude', './assets/dude.png', {frameWidth: 128, frameHeight: 240});
 }
@@ -64,7 +65,8 @@ function create() {
   mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh).setBackgroundColor('#000000');
 
   // First scene
-  this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
+  const bg1 = this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
+  const bg2 = this.add.image(bg1.width, cS.h, 'bg2').setOrigin(0, 1);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
