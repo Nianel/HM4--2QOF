@@ -34,21 +34,20 @@ const config = {
 const game = new Phaser.Game(config);
 
 // Sprites
-let player;
-let pVelocity = 160;
-let pVelocityCount = 0;
-let platforms;
-let tests;
+let bg1, bg2, bg3;
+let platforms, player, tests;
 // Controllers
 let mCamera;
 let kInput;
 let cursors;
-// Score
+// Player properties
+let pVelocity = 180;
+let pVelocityCount = 0;
 let pLifespan = 100;
 let pAge = 20;
-let pScoreText;
 const pAgeIncreasePerQuestion = 10;
 const pLifespanDecreasePerWrongAnswer = 10;
+let pScoreText;
 
 function preload() {
   this.load.image('ground', './assets/ground.png');
@@ -65,8 +64,8 @@ function create() {
   mCamera.setBounds(0, 0, cS.w, cS.h).setSize(cS.vw, cS.vh).setBackgroundColor('#000000');
 
   // First scene
-  const bg1 = this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
-  const bg2 = this.add.image(bg1.width, cS.h, 'bg2').setOrigin(0, 1);
+  bg1 = this.add.image(0, cS.h, 'bg1').setOrigin(0, 1);
+  bg2 = this.add.image(bg1.width, cS.h, 'bg2').setOrigin(0, 1);
 
   // Platforms
   platforms = this.physics.add.staticGroup();
@@ -128,11 +127,11 @@ function create() {
 
 function update() {
   // Modify the velocity
-  if (player.x > 2000 && pVelocityCount === 0) {
-    pVelocity -= 70;
-    pVelocityCount++;
-  } else if (player.x > 2500 && pVelocityCount === 1) {
+  if (player.x > bg1.width && pVelocityCount === 0) {
     pVelocity -= 30;
+    pVelocityCount++;
+  } else if (player.x > bg2.width && pVelocityCount === 1) {
+    pVelocity -= 70;
     pVelocityCount++;
   }
 
