@@ -37,6 +37,7 @@ const game = new Phaser.Game(config);
 let bg1, bg2, bg3;
 let platforms, player, tests;
 // Controllers
+let right, left, turn;
 let mCamera;
 let kInput;
 let cursors;
@@ -119,15 +120,15 @@ function update() {
   if (cursors.left.isDown) {
     // Left Move
     player.setVelocityX(-pVelocity);
-    player.anims.play('left', true);
+    player.anims.play(left, true);
   } else if (cursors.right.isDown) {
     // Right Move
     player.setVelocityX(pVelocity);
-    player.anims.play('right', true);
+    player.anims.play(right, true);
   } else if (Mathabs(player.body.velocity.x) > 0) {
     // Standing
     player.setVelocityX(0);
-    player.anims.play('turn');
+    player.anims.play(turn);
   }
 
   // Jump
@@ -299,25 +300,27 @@ function spriteLoadChar(scene, x, y, key) {
   char.setBounce(0.1);
   char.setCollideWorldBounds(true);
   // Animations
-  animations = [];
-  animations.push(scene.anims.create({
-    key: 'left',
+  left = key + '_left';
+  turn = key + '_turn';
+  right = key + '_right';
+  scene.anims.create({
+    key: left,
     frames: scene.anims.generateFrameNumbers(key, {start: 0, end: 3}),
     frameRate: 10,
     repeat: -1
-  }));
-  animations.push(scene.anims.create({
-    key: 'turn',
+  });
+  scene.anims.create({
+    key: turn,
     frames: [{key: key, frame: 4}],
     frameRate: 20
-  }));
-  animations.push(scene.anims.create({
-    key: 'right',
+  });
+  scene.anims.create({
+    key: right,
     frames: scene.anims.generateFrameNumbers(key, {start: 5, end: 7}),
     frameRate: 10,
     repeat: -1
-  }));
-  char.anims.play('turn');
+  });
+  char.anims.play(turn);
   // Colliders
   scene.physics.add.collider(char, platforms);
   // Overlaps
@@ -327,9 +330,6 @@ function spriteLoadChar(scene, x, y, key) {
 }
 function spriteSwapChar(scene, key) {
   const x = player.x, y = player.y;
-  for (let animation of animations) {
-    animation.destroy();
-  }
   player.destroy();
   player = spriteLoadChar(scene, x, y, key);
 }
