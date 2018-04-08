@@ -44,6 +44,8 @@ let cursors;
 // Score
 let pLifespan = 100;
 let pAge = 20;
+const pAgeIncreasePerQuestion = 10;
+const pLifespanDecreasePerWrongAnswer = 10;
 
 function preload() {
   this.load.image('sky', './assets/sky.png');
@@ -169,10 +171,16 @@ fetch('./assets/tests.json')
 // Tests handler
 const testModal = $('#myModal');
 let testModalIsVisible = false;
-let testObject;
+let testGameObject;
+let testCorrectAnswerNode;
+let testSelectedAnswerNode;
 testModal.on('hidden.bs.modal', function (e) {
   // Increase the poor dude age
-  pAge += 30;
+  pAge += pAgeIncreasePerQuestion;
+  // Reduce the lifespan if the answer is wrong
+  if (testSelectedAnswerNode.dataset.qIndex !== testCorrectAnswerNode.dataset.qIndex) {
+    pLifespan -= pLifespanDecreasePerWrongAnswer;
+  }
   // Is it game over ?
   if (pAge >= pLifespan) {
     // Schedule the end of the game
@@ -207,16 +215,16 @@ testModal.on('hidden.bs.modal', function (e) {
   // Enable back keyboard kInput
   kInput.enabled = true;
   // Destroy the test
-  testObject.disableBody(true, true);
-  testObject = undefined;
+  testGameObject.disableBody(true, true);
+  testGameObject = undefined;
   // Allow the trigger of another modal
   testModalIsVisible = false;
 });
-
 function interactTest(player, test) {
   if (!testModalIsVisible) {
-    // Save the test
-    testObject = test;
+    // Save the test game object
+    testGameObject = test;
+
     // Disable keyboard kInput
     kInput.enabled = false;
     for (let i = 0; i < kInput.keys.length; i++) {
@@ -225,24 +233,61 @@ function interactTest(player, test) {
         key.isDown = false;
       }
     }
-    // Put the question
-    const questionSelected = testsPool[0];
+
+    // Select a test
+    const selectedTest = testsPool[Math.floor(Math.random() * Math.floor(testsPool.length))];
+
+    // Display the question
     const questionNode = document.querySelector('#question');
-    questionNode.innerText = questionSelected.question;
-    const answersNode = document.querySelector('#answers');
-    const answers = questionSelected.answers;
-    let answersList = '';
-    for (let i in answers) {
-      answersList += `<li>${answers[i]}</li>`;
+    questionNode.innerText = selectedTest.question;
+
+    // Display the answer
+    // Clear the old answers
+    const answersParentNode = document.querySelector('#answers');
+    while (answersParentNode.firstChild) {
+      answersParentNode.removeChild(answersParentNode.firstChild);
     }
-    answersNode.innerHTML = answersList;
+    const answers = selectedTest.answers;
+    // Fetch the new ones
+    for (let index in answers) {
+      // Force the index to be a number
+      index = parseInt(index);
+      // Create a child element
+      const child = document.createElement("li");
+      child.innerText = answers[index];
+      child.dataset.qIndex = index;
+      // Click callback
+      child.addEventListener("click", function() {
+        // Save the child reference of the selected answer
+        testSelectedAnswerNode = child;
+        displayCorrectAnswer();
+      }, false);
+      // Keep the child reference of the correct answer
+      if (index === selectedTest.correct) {
+        testCorrectAnswerNode = child;
+      }
+      // Then append it
+      answersParentNode.appendChild(child);
+    }
+
     // Trigger the modal
-    testModalIsVisible = true;
-    testModal.modal({
-      backdrop: 'static',
-      keyboard: false
-    });
+    openTestModal();
   }
+}
+function openTestModal () {
+  testModalIsVisible = true;
+  testModal.modal({
+    backdrop: 'static',
+    keyboard: false
+  });
+}
+function closeTestModal () {
+  testModal.modal('hide');
+}
+function displayCorrectAnswer () {
+  testSelectedAnswerNode.style.border = '2px solid orange';
+  testCorrectAnswerNode.style.background = 'green';
+  setTimeout(closeTestModal, 3000);
 }
 
 // Helpers
