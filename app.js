@@ -96,20 +96,20 @@ function create() {
 
   // Tests objects
   tests = this.physics.add.staticGroup();
-  const test1 = tests.create(850, cS.h - 350, 'test');
-  const test2 = tests.create(1600, cS.h - 150, 'test');
-  const test3 = tests.create(4000, cS.h - 350, 'test');
-  const test4 = tests.create(5000, cS.h - 150, 'test');
-  const test5 = tests.create(6100, cS.h - 150, 'test');
-  const test6 = tests.create(7100, cS.h - 350, 'test');
-  const test7 = tests.create(8955, cS.h - 150, 'test');
-  const test8 = tests.create(9055, cS.h - 150, 'test');
+  tests.create(1160, cS.h - 280, 'test');
+  tests.create(3950, cS.h - 320, 'test');
+  tests.create(5285, cS.h - 250, 'test');
+  tests.create(6120, cS.h - 120, 'test');
+  tests.create(6800, cS.h - 200, 'test');
+  tests.create(9290, cS.h - 330, 'test');
+  tests.create(9700, cS.h - 150, 'test');
+  tests.create(10200, cS.h - 260, 'test');
 
   //Player life
   pScoreText = this.add.text(0, cS.h - cS.vh, 'Age: 20 | Lifespan: 100', { fontSize: '24px', color: '#FFFFFF', backgroundColor: '#000000' }).setOrigin(0, 0);
 
   // The player and its settings
-  player = spriteLoadChar(this, 10, cS.h - 200, 'char1');
+  player = spriteLoadChar(this, 10, cS.h - 150, 'char1');
 
   // Input Events
   cursors = this.input.keyboard.createCursorKeys();
