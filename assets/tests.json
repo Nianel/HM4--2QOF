@@ -1,57 +1,54 @@
 [
   {
-    "question": "What does HTML stand for?",
+    "question": "Quel légume contient de la nicotine ?",
     "answers": [
-      "Hyper Text Markup Language",
-      "HyperLinks and Text Markup Language",
-      "Home Tool Markup Language"
+      "La salade",
+      "La tomate",
+      "La carotte"
+    ],
+    "correct": 1
+  },
+  {
+    "question": "Un certain peuple se tire la langue pour se dire bonjour, lequel ?",
+    "answers": [
+      "Les Tibétains",
+      "Les Hongrois",
+      "Les Chiliens"
     ],
     "correct": 0
   },
   {
-    "question": "The Bootstrap grid system is based on how many columns?",
+    "question": "Peut-on éternuer les yeux ouverts ?",
     "answers": [
-      "6",
-      "9",
-      "12",
-      "3"
+      "Oui",
+      "Non"
     ],
-    "correct": 2
+    "correct": 0
   },
   {
-    "question": "What does CSS stand for?",
+    "question": "Les insectes représentent 80% des animaux.",
     "answers": [
-      "Colorful Style Sheets",
-      "Cascading Style Sheets",
-      "Creative Style Sheets",
-      "Computer Style Sheets"
+      "Vrai",
+      "Faux"
     ],
-    "correct": 1
+    "correct": 0
   },
   {
-    "question": "Which property is used to change the background color?",
+    "question": "Combien avons-nous en moyenne de cheveux sur la tête ?",
     "answers": [
-      "bgcolor",
-      "color",
-      "background-color"
-    ],
-    "correct": 2
-  },
-  {
-    "question": "Javascript is the same as Java?",
-    "answers": [
-      "True",
-      "False"
+      "10 000",
+      "100 000",
+      "1 000 000"
     ],
     "correct": 1
   },
   {
-    "question": "Which event occurs when the user clicks on an HTML element?",
+    "question": "Combien y a t’il de 7 entre 0 et 100 ?",
     "answers": [
-      "onchange",
-      "onmouseclick",
-      "onmouseover",
-      "onclick"
+      "7",
+      "11",
+      "17",
+      "20"
     ],
     "correct": 3
   },
