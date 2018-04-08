@@ -91,10 +91,10 @@ function create() {
   const test4 = tests.create(2100, cS.h - 350, 'test');
 
   //Player life
-  pLifespanText = this.add.text(40, cS.h - 750, 'Life : 100', { fontSize: '32px', fill: '#000' });
+  pLifespanText = this.add.text(40, cS.h - cS.vh + 100, 'Life : 100', { fontSize: '32px', fill: '#000' });
 
   //Player age
-  pAgeText = this.add.text(2000, cS.h - 780, 'Age : 20', { fontSize: '32px', fill: '#000' });
+  pAgeText = this.add.text(40, cS.h - cS.vh + 150, 'Age : 20', { fontSize: '32px', fill: '#000' });
 
   // The layer and its settings
   player = this.physics.add.sprite(10, cS.h - 200, 'dude');
@@ -164,6 +164,10 @@ function update() {
 
   // Camera follow
   if (Mathabs(player.body.velocity.x) > 5 || Mathabs(player.body.velocity.y) > 5) {
+    // pLifespanText.x = player.x + 40 - cS.vwo;
+    // pLifespanText.y = player.y + 100 - cS.vho;
+    // pAgeText.x = player.x + 40 - cS.vwo;
+    // pAgeText.y = player.y + 150 - cS.vho;
     mCamera.scrollX = player.x - cS.vwo;
     mCamera.scrollY = player.y - cS.vho;
   }
