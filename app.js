@@ -91,15 +91,19 @@ function create() {
   const floor = platforms.create(0, cS.h, 'ground').setOrigin(0, 1);
   spriteBundledTransformations(floor, 'axr');
   // Walls
-  const wall = platforms.create(11030, cS.h, 'wall').setOrigin(0, 1).setScale(1, 2).refreshBody();
+  const wall = platforms.create(10345, cS.h, 'wall').setOrigin(0, 1).setScale(1, 2).refreshBody();
   spriteBundledTransformations(wall, 'axr');
 
   // Tests objects
   tests = this.physics.add.staticGroup();
-  const test1 = tests.create(1150, cS.h - 350, 'test');
-  const test2 = tests.create(1500, cS.h - 350, 'test');
-  const test3 = tests.create(1800, cS.h - 350, 'test');
-  const test4 = tests.create(2100, cS.h - 350, 'test');
+  const test1 = tests.create(850, cS.h - 350, 'test');
+  const test2 = tests.create(1600, cS.h - 150, 'test');
+  const test3 = tests.create(4000, cS.h - 350, 'test');
+  const test4 = tests.create(5000, cS.h - 150, 'test');
+  const test5 = tests.create(6100, cS.h - 150, 'test');
+  const test6 = tests.create(7100, cS.h - 350, 'test');
+  const test7 = tests.create(8955, cS.h - 150, 'test');
+  const test8 = tests.create(9055, cS.h - 150, 'test');
 
   //Player life
   pScoreText = this.add.text(0, cS.h - cS.vh, 'Age: 20 | Lifespan: 100', { fontSize: '24px', color: '#FFFFFF', backgroundColor: '#000000' }).setOrigin(0, 0);
